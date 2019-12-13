@@ -11,6 +11,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         //Demo1Activity
         button1.setOnClickListener {
             val intent = Intent(this,Demo1Activity::class.java)
@@ -22,6 +24,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,Demo2Activity::class.java)
             startActivity(intent)
         }
+
+        //Demo2
+        demo3.setOnClickListener {
+            val intent = Intent(this,Demo3Activity::class.java)
+            startActivity(intent)
+        }
+
 
 
     }

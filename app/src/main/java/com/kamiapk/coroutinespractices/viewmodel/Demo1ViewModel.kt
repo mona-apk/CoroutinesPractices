@@ -14,8 +14,12 @@ class Demo1ViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun coroutineCount() {
-
+        /*
+        ViewModelが生きている限り他のアプリを起動していても動き続ける
+         */
         launch {
+            val threadInfo : String = "Thread Name : " + Thread.currentThread().name
+            Log.d("TAG",threadInfo)
             for( i in 1..100) {
                 cCount++
                 Log.d("TAG",cCount.toString())
@@ -23,8 +27,6 @@ class Demo1ViewModel(application: Application) : BaseViewModel(application) {
                 delay(500)
             }
         }
-
     }
-
 
 }
