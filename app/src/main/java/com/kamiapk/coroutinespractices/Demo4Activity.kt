@@ -41,8 +41,12 @@ class Demo4Activity : AppCompatActivity(), UIEventManager {
         progressBar.visibility = View.GONE
     }
 
-    override fun viewToast() {
-        Toast.makeText(applicationContext, "通信を開始します.", Toast.LENGTH_LONG).show()
+    override fun viewToast(message: String) {
+        var toastMessage = message
+        if (message == ""){
+            toastMessage = "通信を開始します"
+        }
+        Toast.makeText(applicationContext, "toastMessage.", Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.kamiapk.coroutinespractices.model.AlbumsRepository
 import com.kamiapk.coroutinespractices.util.UIEventManager
+import retrofit2.HttpException
+import java.io.IOException
 import kotlin.random.Random
 
 
@@ -17,12 +19,19 @@ class Demo4ViewModel(application: Application, private val eventManager : UIEven
 
     val albums =  liveData {
         Log.d("tags",id.toString())
-        eventManager.viewProgressBar()
-        eventManager.viewToast()
-        val album = albumsRepository.getAlbum(id)
-        Log.d("tags",id.toString())
-        eventManager.stopProgressBar()
-        emit(album)
+        try {
+            eventManager.viewProgressBar()
+            eventManager.viewToast("")
+            val album = albumsRepository.getAlbum(id)
+            eventManager.stopProgressBar()
+            emit(album)
+        }catch (ioException : IOException){
+            eventManager.viewToast("Network Error")
+            eventManager.stopProgressBar()
+        }catch (httpException : HttpException) {
+            eventManager.viewToast("Error")
+            eventManager.stopProgressBar()
+        }
     }
 
 }
