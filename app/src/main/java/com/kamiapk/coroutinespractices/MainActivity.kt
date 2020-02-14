@@ -25,9 +25,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //Demo2
+        //Demo3
         demo3.setOnClickListener {
             val intent = Intent(this,Demo3Activity::class.java)
+            startActivity(intent)
+        }
+
+        //Demo3
+        demo4.setOnClickListener {
+            val intent = Intent(this,Demo4Activity::class.java)
             startActivity(intent)
         }
 

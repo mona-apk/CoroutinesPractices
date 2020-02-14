@@ -4,21 +4,18 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_demo3.*
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 class Demo3Activity : AppCompatActivity() {
-
-    private var nowTime : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo3)
 
+        //TODO:animationの追加
+        //ボタンについてですね
         normal.setOnClickListener {
             outputText.text = "Normal Launch\n"
             CoroutineScope(IO).launch{
@@ -26,6 +23,7 @@ class Demo3Activity : AppCompatActivity() {
                 val buf1 = first()
                 val buf2 = second()
                 outputText.text ="${outputText.text.toString()}\nSum:${buf1 + buf2}s"
+
             }
         }
 
@@ -33,11 +31,20 @@ class Demo3Activity : AppCompatActivity() {
         asyncButton.setOnClickListener {
             outputText.text = "Async and Await Launch\n"
             CoroutineScope(IO).launch{
-                //asyncで囲むだけ
+
+                //IOにおいてasyncで囲むことでfirst(),second()は並列に処理される
                 val buf1 = async {first()}
                 val buf2 = async {second()}
-                // val x = buf1.await() + buf2.await() のような使われかたをする
-                outputText.text ="${outputText.text.toString()}\nSum:${buf2.await()}s"
+
+                //.await()でasyncの2つの関数の処理の結果を待つことができる
+                val x : Int = if ( buf1.await() <=  buf2.await()) {
+                    buf2
+                } else {
+                    buf1
+                }.await()
+
+                outputText.text ="${outputText.text.toString()}\nSum:${x}s"
+
             }
         }
 
